@@ -1,7 +1,27 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { LoginComponent } from './auth/login.component';
+import { RegistroComponent } from './auth/registro.component';
 
-const routes: Routes = [];
+import { IndexComponent } from './index/index.component';
+import { DetalleProductoComponent } from './producto/detalle-producto.component';
+import { EditarProductoComponent } from './producto/editar-producto.component';
+import { ListaProductoComponent } from './producto/lista-producto.component';
+import { NuevoProductoComponent } from './producto/nuevo-producto.component';
+
+import { ProdGuardGuard as guard} from './guards/prod-guard.guard';
+
+
+const routes: Routes = [
+  { path: '', component: IndexComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'registro', component: RegistroComponent },
+  { path: 'lista', component: ListaProductoComponent, canActivate: [guard],data: {expectedRol: ['user']}},
+  { path: 'detalle/:id', component: DetalleProductoComponent, canActivate: [guard],data: {expectedRol: ['admin','user']} },
+  { path: 'nuevo', component: NuevoProductoComponent},
+  { path: 'editar/:id', component: EditarProductoComponent, canActivate: [guard],data: {expectedRol: ['admin','user']}  },
+  {path: '**', redirectTo: '', pathMatch: 'full'}
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
