@@ -24,11 +24,17 @@ export class ProdGuardGuard implements CanActivate {
         this.realRol = 'admin';
       }
     });
-    if (this.tokenService.getToken() || expectedRol.indexOf(this.realRol) === 1){
+    if (!this.tokenService.getToken() || expectedRol.indexOf(this.realRol) === -1){
       this.router.navigate(['/']);
+      console.log(this.realRol);
+      console.log("nel");
+
       return false;
     }
+    console.log(this.realRol);
+    console.log("pasale");
     return true;
   }
 
+  //if (!this.tokenService.getToken() || expectedRol.indexOf(this.realRol) === -1){
 }
